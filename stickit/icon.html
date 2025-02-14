@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Stick It App</title>
+    <style>
+        body {
+    background: url('https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQisi_GOotGtrzhIrFwxdKsBQifdGd9sQKh1A&s') no-repeat center center fixed; 
+    background-size: cover; /* Ensure the background image covers the entire page */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+    font-family: 'Arial', sans-serif;
+    color: #fff;
+    text-align: center;
+}
+        .container {
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 15px;
+            padding: 40px;
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.2);
+            transition: transform 0.3s;
+        }
+        .container:hover {
+            transform: scale(1.05);
+        }
+        img {
+            width: 150px; /* Adjust width as needed */
+            height: auto;
+            border-radius: 10px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+            transition: transform 0.2s;
+        }
+        img:hover {
+            transform: scale(1.1);
+        }
+        h1 {
+            font-size: 2.5em;
+            margin: 20px 0 10px;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+        }
+        p {
+            font-size: 1.2em;
+            color: #e0e0e0;
+            margin: 0;
+            line-height: 1.5;
+        }
+        button {
+            background-color: #ff4081;
+            color: white;
+            border: none;
+            border-radius: 25px;
+            padding: 10px 20px;
+            font-size: 1em;
+            cursor: pointer;
+            transition: background-color 0.3s, transform 0.2s;
+            margin-top: 20px;
+        }
+        button:hover {
+            background-color: #ff79b0;
+            transform: translateY(-2px);
+        }
+    </style>
+</head>
+<body>
+
+<div class="container" onclick="redirectToStickIt()">
+    <img src="icon.jpg" alt="Stick It Icon">
+    <h1>Stick It</h1>
+    <p>Take notes, make it happen</p>
+    <button onclick="redirectToStickIt()">Get Started</button>
+</div>
+
+<script>
+    function redirectToStickIt() {
+        window.location.href = 'stickit.html';
+    }
+</script>
+
+</body>
+</html>
