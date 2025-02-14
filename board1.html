@@ -1,0 +1,341 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Sticky Notes Board</title>
+  <style>
+    /* Basic styles for layout and appearance */
+    body {
+        font-family: 'Arial', sans-serif;
+        background: url('bim.jpg') no-repeat center center fixed; /* Set the background image here */
+        background-size: cover; /* Ensure the image covers the full screen */
+        margin: 0;
+        padding: 0;
+        min-height: 100vh;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .board-container {
+        width: 100vw; /* Full width */
+        height: 100vh; /* Full height */
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        position: relative;
+        background-color: rgba(255, 255, 255, 0.8); /* Slight transparency to allow the background image to show through */
+        border-radius: 10px; /* Rounded corners */
+        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1); /* Soft shadow */
+        overflow: hidden;
+    }
+
+    .board-header {
+        position: absolute;
+        top: 20px;
+        width: 100%;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 0 20px;
+    }
+
+    #search-bar {
+        width: 300px;
+        padding: 10px;
+        font-size: 16px;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+    }
+
+    button {
+        padding: 10px 20px;
+        font-size: 16px;
+        cursor: pointer;
+        border-radius: 5px;
+        border: none;
+        transition: background-color 0.3s;
+    }
+
+    #add-sticky-btn {
+        background-color: #4CAF50; /* Green */
+        color: white;
+    }
+
+    #add-sticky-btn:hover {
+        background-color: #45a049; /* Darker green */
+    }
+
+    #save-btn {
+        background-color: #008CBA; /* Blue */
+        color: white;
+    }
+
+    #save-btn:hover {
+        background-color: #007bb5; /* Darker blue */
+    }
+
+    .delete-btn {
+        background-color: red;
+        color: white;
+    }
+
+    .delete-btn:hover {
+        background-color: darkred; /* Darker red */
+    }
+
+    /* Sticky notes container */
+    .sticky-notes-container {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 10px;
+        position: relative;
+    }
+
+    .sticky-note {
+        width: 150px;
+        padding: 10px;
+        border-radius: 8px;
+        box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+        cursor: move;
+        position: absolute; /* Allow notes to be placed anywhere on the board */
+        transition: all 0.3s ease;
+        overflow: hidden;
+        height: 200px; /* Increased height to accommodate title and buttons */
+        background-color: peachpuff; /* Bright yellow */
+    }
+
+    .sticky-note input {
+        width: 100%;
+        border: none;
+        background-color: transparent;
+        font-size: 14px;
+        font-family: Arial, sans-serif;
+        margin-bottom: 5px; /* Space between title and buttons */
+    }
+
+    .sticky-note textarea {
+        width: 100%;
+        height: 100%;
+        border: none;
+        background-color: transparent;
+        font-size: 14px;
+        font-family: Arial, sans-serif;
+        resize: none;
+        margin-top: 5px; /* Space between buttons and textarea */
+    }
+
+    .sticky-note select {
+        position: absolute;
+        bottom: 10px;
+        left: 10px;
+        font-size: 12px;
+    }
+
+    .sticky-note .color-picker {
+        position: absolute;
+        bottom: 10px;
+        right: 10px;
+    }
+
+    .sticky-note:hover {
+        width: 300px;
+        height: 300px;
+    }
+
+    /* Save button styles */
+    .sticky-note .save-btn, 
+    .sticky-note .delete-btn {
+        padding: 5px 10px; /* Adjusted for better text fit */
+        background-color: #FFEB3B; /* Bright yellow */
+        border: none;
+        font-size: 14px; /* Adjust font size */
+        cursor: pointer;
+        display: inline-block;
+        transition: background-color 0.3s;
+    }
+
+    .sticky-note .save-btn {
+        background-color: #4CAF50; /* Green */
+        color: white;
+    }
+
+    .sticky-note .save-btn:hover {
+        background-color: #45a049; /* Darker green */
+    }
+
+    .sticky-note .delete-btn {
+        background-color: red;
+        color: white;
+    }
+
+    .sticky-note .delete-btn:hover {
+        background-color: darkred; /* Darker red */
+    }
+  </style>
+</head>
+<body>
+  <div class="board-container">
+    <!-- Board Content Section -->
+    <div id="board-content" class="board-content">
+      <h1 id="board-title">Sticky Notes Board</h1>
+      <!-- Board Header with Search and Add Button -->
+      <header class="board-header">
+        <input type="text" id="search-bar" placeholder="Search notes...">
+        <button id="add-sticky-btn">Add New Sticky</button>
+        <button id="save-btn">Save</button>
+        <button id="delete-board-btn" class="close-btn">X</button> <!-- Close button for the board -->
+      </header>
+
+      <!-- Sticky Notes Container -->
+      <div id="sticky-notes-container" class="sticky-notes-container">
+        <!-- Sticky notes will be dynamically added here -->
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // DOM Elements
+    const addStickyBtn = document.getElementById('add-sticky-btn');
+    const saveBtn = document.getElementById('save-btn');
+    const searchBar = document.getElementById('search-bar');
+    const boardTitle = document.getElementById('board-title');
+    const deleteBoardBtn = document.getElementById('delete-board-btn');
+    const stickyNotesContainer = document.getElementById('sticky-notes-container');
+
+    // Sticky notes array to store all the sticky notes on the current board
+    let stickyNotes = [];
+
+    // Function to create a new sticky note
+    function createStickyNote() {
+      const note = document.createElement('div');
+      note.classList.add('sticky-note');
+
+      // Title Input
+      const titleInput = document.createElement('input');
+      titleInput.type = 'text';
+      titleInput.placeholder = 'Title';
+
+      // Color Picker
+      const colorPicker = document.createElement('input');
+      colorPicker.type = 'color';
+      colorPicker.classList.add('color-picker');
+      colorPicker.value = '#ffcc00'; // Default color
+
+      // Font Selector
+      const fontSelector = document.createElement('select');
+      const fonts = ['Arial', 'Comic Sans MS', 'Courier New', 'Georgia', 'Times New Roman'];
+      fonts.forEach(font => {
+        const option = document.createElement('option');
+        option.value = font;
+        option.textContent = font;
+        fontSelector.appendChild(option);
+      });
+
+      // Add initial textarea
+      const textarea = document.createElement('textarea');
+      textarea.placeholder = "Type your note...";
+
+      // Create buttons container
+      const buttonsContainer = document.createElement('div');
+      buttonsContainer.classList.add('buttons-container');
+
+      // Save Button
+      const saveButton = document.createElement('button');
+      saveButton.textContent = 'Save';
+      saveButton.classList.add('save-btn');
+
+      // Delete Button
+      const deleteButton = document.createElement('button');
+      deleteButton.textContent = 'X';
+      deleteButton.classList.add('delete-btn');
+
+      // Append elements to the note
+      buttonsContainer.appendChild(saveButton);
+      buttonsContainer.appendChild(deleteButton);
+      note.appendChild(titleInput);
+      note.appendChild(colorPicker); // Append color picker
+      note.appendChild(fontSelector); // Append font selector
+      note.appendChild(buttonsContainer);
+      note.appendChild(textarea);
+      
+      stickyNotesContainer.appendChild(note);
+
+      // Set the initial background color
+      note.style.backgroundColor = colorPicker.value;
+
+      // Create sticky note object
+      const stickyNote = {
+        id: Date.now(),
+        content: '',
+        title: '',
+        color: colorPicker.value, // Store the color
+        font: 'Arial' // Default font
+      };
+      stickyNotes.push(stickyNote);
+
+      // Event listeners for dynamically created elements
+      // Save content when typing
+      titleInput.addEventListener('input', (e) => {
+        const noteIndex = stickyNotes.findIndex(n => n.id === stickyNote.id);
+        stickyNotes[noteIndex].title = e.target.value;
+      });
+
+      textarea.addEventListener('input', (e) => {
+        const noteIndex = stickyNotes.findIndex(n => n.id === stickyNote.id);
+        stickyNotes[noteIndex].content = e.target.value;
+      });
+
+      // Color picker change event
+      colorPicker.addEventListener('input', (e) => {
+        note.style.backgroundColor = e.target.value; // Change the note's background color
+        stickyNote.color = e.target.value; // Update the sticky note color
+      });
+
+      // Font selector change event
+      fontSelector.addEventListener('change', (e) => {
+        textarea.style.fontFamily = e.target.value; // Change the font of the textarea
+        stickyNote.font = e.target.value; // Update the sticky note font
+      });
+
+      // Save button functionality
+      saveButton.addEventListener('click', () => {
+        alert('Note saved!');
+      });
+
+      // Delete button functionality (removes only the clicked note)
+      deleteButton.addEventListener('click', () => {
+        note.remove();
+        stickyNotes = stickyNotes.filter(n => n.id !== stickyNote.id);
+      });
+
+      // Add drag functionality to the note
+      let isDragging = false;
+      let offsetX, offsetY;
+
+      note.addEventListener('mousedown', (e) => {
+        isDragging = true;
+        offsetX = e.clientX - note.offsetLeft;
+        offsetY = e.clientY - note.offsetTop;
+        note.style.zIndex = 10; // Bring the note to the front while dragging
+      });
+
+      document.addEventListener('mousemove', (e) => {
+        if (isDragging) {
+          note.style.left = `${e.clientX - offsetX}px`; // Use backticks for template literals
+          note.style.top = `${e.clientY - offsetY}px`; // Use backticks for template literals
+        }
+      });
+
+      document.addEventListener('mouseup', () => {
+        isDragging = false;
+        note.style.zIndex = ''; // Reset the z-index after dragging
+      });
+    }
+
+    // Add sticky note
+    addStickyBtn.addEventListener('click', createStickyNote);
+  </script>
+</body>
+</html>

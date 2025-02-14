@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Register Page</title>
+    <style>
+        /* General reset */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        /* Body styling */
+        body {
+            font-family: 'Roboto', sans-serif;
+            background-image: url('regim.jpg'); /* Add the background image URL here */
+            background-size: cover; /* Ensure the image covers the full screen */
+            background-position: center; /* Position the image in the center */
+            background-attachment: fixed; /* Keep the background fixed while scrolling */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+
+        /* Container Styling */
+        .container {
+            background-color: rgba(188, 233, 244, 0.9); /* Semi-transparent white background to allow image visibility */
+            padding: 40px 30px;
+            border-radius: 15px;
+            box-shadow: 1px 1px 20px rgba(27, 4, 200, 0.5);
+            width: 100%;
+            max-width: 420px;
+            text-align: center;
+        }
+
+        .container h1 {
+            font-size: 40px;
+            margin-bottom: 25px;
+            color: #4A4A4A;
+            font-weight: 700;
+        }
+
+        /* Form groups */
+        .form-group {
+            margin-bottom: 20px;
+            text-align: left;
+        }
+
+        label {
+            font-size: 18px;
+            color: #7A7A7A;
+            margin-bottom: 8px;
+            display: block;
+            font-weight: 600;
+        }
+
+        input {
+            width: 100%;
+            padding: 14px;
+            font-size: 18px;
+            border: 1px solid #E0E0E0;
+            border-radius: 8px;
+            transition: all 0.3s ease;
+            outline: none;
+            background-color: #FAFAFA;
+        }
+
+        input:focus {
+            border-color: #57A8E4;
+            box-shadow: 0 0 8px rgba(87, 168, 228, 0.3);
+        }
+
+        /* Button Styling */
+        button {
+            width: 100%;
+            padding: 14px;
+            background-color: #57A8E4;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 18px;
+            cursor: pointer;
+            transition: background-color 0.3s ease, transform 0.2s ease;
+            font-weight: 600;
+        }
+
+        button:hover {
+            background-color: #457BB5;
+            transform: translateY(-2px);
+        }
+
+        /* Responsive styling */
+        @media (max-width: 480px) {
+            .container {
+                padding: 25px;
+                max-width: 90%;
+            }
+
+            h1 {
+                font-size: 32px;
+            }
+
+            input {
+                font-size: 16px;
+            }
+
+            button {
+                font-size: 16px;
+            }
+        }
+
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Sign Up Here!</h1>
+        <form id="registerForm">
+            <div class="form-group">
+                <label for="username">Username</label>
+                <input type="text" id="username" required placeholder="Enter your username">
+            </div>
+            <div class="form-group">
+                <label for="password">Password</label>
+                <input type="password" id="password" required placeholder="Create your password">
+            </div>
+            <div class="form-group">
+                <label for="confirmPassword">Confirm Password</label>
+                <input type="password" id="confirmPassword" required placeholder="Re-enter your password">
+            </div>
+            <button type="submit">Sign Up</button>
+        </form>
+    </div>
+
+    <script src="signup.js">
+       
+    </script>
+</body>
+</html>

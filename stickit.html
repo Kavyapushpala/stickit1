@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Stickit App Login</title>
+  <style>
+    body {
+      font-family: 'Arial', sans-serif;
+      background-image: url('logim.jpg'); /* Set your background image here */
+      background-size: cover; /* Ensure the background covers the whole screen */
+      background-position: center; /* Position the image at the center */
+      background-attachment: fixed; /* Make the background fixed when scrolling */
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      margin: 0;
+      color: #333;
+    }
+
+    .login-container {
+      background-color: lavenderblush; /* Make background semi-transparent to let the image show through */
+      padding: 40px 30px;
+      border-radius: 15px;
+      box-shadow: 2px 2px 20px rgba(27, 4, 200, 0.5);
+      width: 100%;
+      max-width: 420px;
+      text-align: center;
+      transition: all 0.3s ease;
+    }
+
+    .login-container:hover {
+      box-shadow: 2px 2px 20px rgba(13, 51, 225, 0.15);
+      transform: translateY(-5px);
+    }
+
+    h2 {
+      color: #6C5B7B;
+      font-size: 26px;
+      margin-bottom: 15px;
+      font-weight: bold;
+    }
+
+    .slogan {
+      font-style: italic;
+      color: #B39DDB;
+      margin-bottom: 20px;
+    }
+
+    .form-group {
+      margin-bottom: 20px;
+      text-align: left;
+    }
+
+    label {
+      display: block;
+      margin-bottom: 6px;
+      font-weight: 600;
+      color: #333;
+    }
+
+    input, select {
+      width: 100%;
+      padding: 14px;
+      font-size: 16px;
+      box-sizing: border-box;
+      border: 1px solid #E0E0E0;
+      border-radius: 8px;
+      outline: none;
+      transition: all 0.3s ease;
+      background-color: #FAFAFA;
+    }
+
+    input:focus, select:focus {
+      border-color: #57A8E4;
+      box-shadow: 0 0 5px rgba(87, 168, 228, 0.3);
+    }
+
+    button {
+      width: 100%;
+      padding: 14px;
+      background-color: #57A8E4;
+      color: white;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      font-size: 16px;
+      transition: background-color 0.3s ease, transform 0.3s ease;
+      font-weight: 600;
+    }
+
+    button:hover {
+      background-color: #457BB5;
+      transform: translateY(-2px);
+    }
+
+    .auth-links {
+      margin-top: 20px;
+      color: #B39DDB;
+    }
+
+    .auth-links a {
+      color: #6C5B7B;
+      text-decoration: none;
+      font-weight: bold;
+      transition: color 0.3s ease;
+    }
+
+    .auth-links a:hover {
+      color: #8E24AA;
+      text-decoration: underline;
+    }
+
+    /* Responsive Styles */
+    @media (max-width: 480px) {
+      .login-container {
+        padding: 25px;
+        max-width: 90%;
+      }
+
+      h2 {
+        font-size: 22px;
+      }
+
+      button {
+        font-size: 14px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="login-container">
+    <h2>Welcome to Stickit!</h2>
+    <p class="slogan">"Where your ideas stick!"</p>
+    
+    <!-- Login Form -->
+    <form id="loginForm">
+      <div class="form-group">
+        <label for="username">Username:</label>
+        <input type="text" id="username" name="username" required placeholder="Enter your username">
+      </div>
+
+      <div class="form-group">
+        <label for="password">Password:</label>
+        <input type="password" id="password" name="password" required placeholder="Enter your password">
+      </div>
+
+      <!-- Select Option for Passkey or Create Board -->
+      <div class="form-group">
+        <label for="actionOption">Choose action:</label>
+        <select id="actionOption" name="actionOption" required>
+          <option value="passkey">Enter Passkey</option>
+          <option value="createBoard">Create Board</option>
+        </select>
+      </div>
+
+      <!-- Passkey Input (Hidden by Default) -->
+      <div class="form-group" id="passkeyGroup" style="display:none;">
+        <label for="passkey">Passkey (for specific board):</label>
+        <input type="text" id="passkey" name="passkey" placeholder="Enter passkey">
+      </div>
+
+      <button type="submit" id="loginButton">Login</button>
+    </form>
+
+    <div class="auth-links">
+      <p>Don't have an account? <a href="signup.html">Sign up</a></p>
+    </div>
+  </div>
+
+  <script src="stickit.js">
+    
+  </script>
+</body>
+</html>
